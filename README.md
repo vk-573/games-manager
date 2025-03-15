@@ -78,11 +78,10 @@ Please elaborate an action plan.
 - P2 Tests
 - P2 Input validation/sanitizing
 
-
 The first mandatory steps are the rights management, the Applestore/Playstore api integration and the confirmation of the game interface. For the rights we will declare it as middleware auth guards in order to make theses endpoints privates and not public. For the API integration it will be a new Service/Repository
 So that we can expose in real time the correct data (if this data is available on the Applestore/Playstore APIs) privately inside our voodoo ecosystem. Of course we must as well confirm the correct interface of the game objects with the data team and forward this interface to others consuming-api teams.
 Then we can progressively release the others key points, implementing the company's logging template with correct context and levels as well as API versionning.
-Adding typescriot in order to make the code more clear and maintainable as well.
+Adding typescriot in order to make the code more clear and maintainable as well, without forgetting to implement some Unit/Integration tests
 
 
 #### Question 2:
