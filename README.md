@@ -75,7 +75,9 @@ Please elaborate an action plan.
 - P1 Logger template and context
 - P1 API Versioning
 - P2 Typescript
+- P2 Tests
 - P2 Input validation/sanitizing
+
 
 The first mandatory steps are the rights management, the Applestore/Playstore api integration and the confirmation of the game interface. For the rights we will declare it as middleware auth guards in order to make theses endpoints privates and not public. For the API integration it will be a new Service/Repository
 So that we can expose in real time the correct data (if this data is available on the Applestore/Playstore APIs) privately inside our voodoo ecosystem. Of course we must as well confirm the correct interface of the game objects with the data team and forward this interface to others consuming-api teams.
@@ -87,7 +89,7 @@ Adding typescriot in order to make the code more clear and maintainable as well.
 Let's pretend our data team is now delivering new files every day into the S3 bucket, and our service needs to ingest those files
 every day through the populate API. Could you describe a suitable solution to automate this? Feel free to propose architectural changes.
 
-## Answer 1:
+## Answer 2:
 I can see multiple solutions depending on your needs and available time/resources
 
 S3 bucket event listening https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html
