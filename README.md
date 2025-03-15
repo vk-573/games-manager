@@ -53,6 +53,9 @@ To do this, our data team have put in place 2 files at your disposal in an S3 bu
 - https://interview-marketing-eng-dev.s3.eu-west-1.amazonaws.com/android.top100.json
 - https://interview-marketing-eng-dev.s3.eu-west-1.amazonaws.com/ios.top100.json
 
+CANDIDATE NOTE:
+I'm taking this as to add only the endpoint on the api side without implementing the button on the front side.
+
 # Theory Assignments
 You should complete these only after you have completed the practical assignments.
 
@@ -63,8 +66,45 @@ Many other applications at Voodoo will use consume this API.
 We are planning to put this project in production. According to you, what are the missing pieces to make this project production ready? 
 Please elaborate an action plan.
 
+## Answer 1:
+
+- P0 IOS and Google PLay store api integration (if available)
+- P0 Rights (tokens verification for our api clients)
+- P0 Game Interface
+- P0 Managed DB
+- P1 Logger template and context
+- P1 API Versioning
+- P2 Typescript
+- P2 Input validation/sanitizing
+
+The first mandatory steps are the rights management, the Applestore/Playstore api integration and the confirmation of the game interface. For the rights we will declare it as middleware auth guards in order to make theses endpoints privates and not public. For the API integration it will be a new Service/Repository
+So that we can expose in real time the correct data (if this data is available on the Applestore/Playstore APIs) privately inside our voodoo ecosystem. Of course we must as well confirm the correct interface of the game objects with the data team and forward this interface to others consuming-api teams.
+Then we can progressively release the others key points, implementing the company's logging template with correct context and levels as well as API versionning.
+Adding typescriot in order to make the code more clear and maintainable as well.
+
+
 #### Question 2:
 Let's pretend our data team is now delivering new files every day into the S3 bucket, and our service needs to ingest those files
 every day through the populate API. Could you describe a suitable solution to automate this? Feel free to propose architectural changes.
 
+## Answer 1:
+I can see multiple solutions depending on your needs and available time/resources
 
+S3 bucket event listening https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html
+
+Before going to these solution we need to confirm with the data team the format of theirs changes, a game per file, or an aggregated file for a list of games.
+
+A) S3 events will trigger a lambda function which will call this api's /api/games/populate endpoint
+
+B) Polling the s3 bucket from this api every X minutes and looking for a tag (file version) changement on the file/files
+In order to do that we must as well add a new table into our db which will track the last readed tag of the s3 file/files
+
+
+Message Queues solution (without S3)
+
+A) The data team can automaticly push their "release" of data into a message queue service
+like KAFKA which are going to be consumed by a new application service (consumer), and this consumer will call our api.
+
+
+# PS
+- axios script raw url doesn't work anymore
